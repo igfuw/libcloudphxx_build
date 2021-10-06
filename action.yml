@@ -18,6 +18,7 @@ runs:
   using: "composite"
   steps:
   - name: Install Nvidia driver
+    shell: bash
     if: ${{!inputs.disable_cuda}}
     run: sudo apt install --no-install-recommends nvidia-driver-470
   
@@ -41,6 +42,7 @@ runs:
       key: 'sng_ubuntu_20_04_cuda_11_4'
       
   - name: Download UWLCM Singularity image
+    shell: bash
     if: steps.cache_singularity.outputs.cache-hit != 'true'
     run: |
       mkdir '${{ github.workspace }}/singularity_images'
@@ -53,10 +55,12 @@ runs:
       SI: '${{ github.workspace }}/singularity_images/uwlcm_ubuntu_20_04_cuda_11_4.sif'
     
   - name: Configure CMake
+    shell: bash
     # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
     # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
     run: singularity exec $SI cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{inputs.build_type}} -DLIBCLOUDPHXX_FORCE_MULTI_CUDA=True -DLIBCLOUDPHXX_DISABLE_CUDA=${{inputs.disable_cuda}}
 #
   - name: Build libcloudph++
+    shell: bash
     # Build your program with the given configuration
     run: VERBOSE=1 singularity exec $SI cmake --build ${{github.workspace}}/build --config ${{inputs.build_type}} -j${{inputs.threads}}
