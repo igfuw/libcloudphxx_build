@@ -39,7 +39,7 @@ runs:
  #   if: ${{!inputs.disable_cuda}}
 
   - name: load UWLCM Singularity image
-    uses: igfuw/load_UWLCM_singularity_image@latest
+    uses: igfuw/load_UWLCM_singularity_image@v0.2b
     with:
       path: ${{ inputs.path }}/singularity_images
       tag: ${{ inputs.tag }}
