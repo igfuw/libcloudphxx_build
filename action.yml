@@ -92,7 +92,7 @@ runs:
     shell: bash
     # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
     # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
-    run: apptainer exec $SI LD_DEBUG=libs cmake -B ${{inputs.path}}/build -DCMAKE_BUILD_TYPE=${{inputs.build_type}} -DLIBCLOUDPHXX_FORCE_MULTI_CUDA=True -DLIBCLOUDPHXX_DISABLE_CUDA=${{inputs.disable_cuda}} -DCMAKE_INSTALL_PREFIX=${{inputs.install_prefix}} -DCMAKE_CXX_COMPILER=${{inputs.cxx}}
+    run: apptainer exec LD_DEBUG=libs $SI cmake -B ${{inputs.path}}/build -DCMAKE_BUILD_TYPE=${{inputs.build_type}} -DLIBCLOUDPHXX_FORCE_MULTI_CUDA=True -DLIBCLOUDPHXX_DISABLE_CUDA=${{inputs.disable_cuda}} -DCMAKE_INSTALL_PREFIX=${{inputs.install_prefix}} -DCMAKE_CXX_COMPILER=${{inputs.cxx}}
 #
   - name: Build libcloudph++
     shell: bash
