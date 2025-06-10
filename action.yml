@@ -87,6 +87,11 @@ runs:
 #    uses: mxschmitt/action-tmate@v3
 
     
+  - name: Check versions of NVIDIA driver and of CUDA
+    working-directory: ${{ inputs.path }}
+    shell: bash
+    run: apptainer exec $SI nvidia-smi
+    
   - name: Configure CMake
     working-directory: ${{ inputs.path }}
     shell: bash
