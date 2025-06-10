@@ -35,7 +35,7 @@ runs:
   - name: Install Nvidia driver
     shell: bash
     run: |
-      [ "${{inputs.disable_cuda}}" = "false" ] && sudo apt install --no-install-recommends nvidia-driver-470 || true
+      [ "${{inputs.disable_cuda}}" = "false" ] && sudo apt install --no-install-recommends nvidia-driver-570 || true
  #   if: ${{!inputs.disable_cuda}}
 
   - name: load UWLCM Apptainer image
