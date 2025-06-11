@@ -28,6 +28,10 @@ inputs:
     description: 'C++ compiler'
     required: true
     default: 'g++'
+  app_opts:
+    description: 'Apptainer exec options'
+    required: true
+    default: ''
 
 runs:
   using: "composite"
@@ -92,9 +96,9 @@ runs:
     shell: bash
     # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
     # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
-    run: LD_DEBUG=libs apptainer exec $SI cmake -B ${{inputs.path}}/build -DCMAKE_BUILD_TYPE=${{inputs.build_type}} -DLIBCLOUDPHXX_FORCE_MULTI_CUDA=True -DLIBCLOUDPHXX_DISABLE_CUDA=${{inputs.disable_cuda}} -DCMAKE_INSTALL_PREFIX=${{inputs.install_prefix}} -DCMAKE_CXX_COMPILER=${{inputs.cxx}}
+    run: LD_DEBUG=libs apptainer exec ${{inputs.app_opts}} $SI cmake -B ${{inputs.path}}/build -DCMAKE_BUILD_TYPE=${{inputs.build_type}} -DLIBCLOUDPHXX_FORCE_MULTI_CUDA=True -DLIBCLOUDPHXX_DISABLE_CUDA=${{inputs.disable_cuda}} -DCMAKE_INSTALL_PREFIX=${{inputs.install_prefix}} -DCMAKE_CXX_COMPILER=${{inputs.cxx}}
 #
   - name: Build libcloudph++
     shell: bash
     # Build your program with the given configuration
-    run: VERBOSE=1 apptainer exec $SI cmake --build ${{inputs.path}}/build --config ${{inputs.build_type}} -j${{inputs.threads}}
+    run: VERBOSE=1 apptainer exec ${{inputs.app_opts}} $SI cmake --build ${{inputs.path}}/build --config ${{inputs.build_type}} -j${{inputs.threads}}
