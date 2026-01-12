@@ -16,6 +16,9 @@ inputs:
   path:
     description: "path to the dir with libcloudphxx code"
     required: true
+  singularity_path:
+    description: "path to the dir with the singularity image"
+    required: true
   install_prefix:
     description: "CMake install prefix"
     required: true
@@ -45,7 +48,7 @@ runs:
   - name: load UWLCM Apptainer image
     uses: igfuw/load_UWLCM_singularity_image@main
     with:
-      path: ${{ inputs.path }}/apptainer_images
+      path: ${{ inputs.singularity_path }}
       tag: ${{ inputs.tag }}
   
 #  - name: Install Singularity
